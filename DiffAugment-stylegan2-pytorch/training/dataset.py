@@ -1,4 +1,4 @@
-﻿# Copyright (c) 2021, NVIDIA CORPORATION.  All rights reserved.
+# Copyright (c) 2021, NVIDIA CORPORATION.  All rights reserved.
 #
 # NVIDIA CORPORATION and its licensors retain all intellectual property
 # and proprietary rights in and to this software, related documentation
@@ -9,7 +9,8 @@
 import os
 import numpy as np
 import zipfile
-import PIL.Image
+import PIL
+from PIL import Image
 import json
 import torch
 import dnnlib
@@ -210,10 +211,10 @@ class ImageFolderDataset(Dataset):
     def _load_raw_image(self, raw_idx):
         fname = self._image_fnames[raw_idx]
         with self._open_file(fname) as f:
-            if pyspng is not None and self._file_ext(fname) == '.png':
+            if pyspng is not None and self._file_ext(fname) == '.pnggg':
                 image = pyspng.load(f.read())
             else:
-                image = np.array(PIL.Image.open(f))
+                image = np.array(Image.open(f))
         if image.ndim == 2:
             image = image[:, :, np.newaxis] # HW => HWC
         image = image.transpose(2, 0, 1) # HWC => CHW
