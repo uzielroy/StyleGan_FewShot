@@ -32,14 +32,14 @@ def sample(generator, step, mean_style, n_sample, device):
         mean_style=mean_style,
         style_weight=0.7,
     )
-    
+
     return image
 
 @torch.no_grad()
 def style_mixing(generator, step, mean_style, n_source, n_target, device):
     source_code = torch.randn(n_source, 512).to(device)
     target_code = torch.randn(n_target, 512).to(device)
-    
+
     shape = 4 * 2 ** step
     alpha = 1
 
@@ -67,34 +67,34 @@ def style_mixing(generator, step, mean_style, n_source, n_target, device):
         images.append(image)
 
     images = torch.cat(images, 0)
-    
+
     return images
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--size', type=int, default=1024, help='size of the image')
-    parser.add_argument('--n_row', type=int, default=3, help='number of rows of sample matrix')
-    parser.add_argument('--n_col', type=int, default=5, help='number of columns of sample matrix')
+    parser.add_argument('--size', type=int, default=256, help='size of the image')
+    parser.add_argument('--n_row', type=int, default=1, help='number of rows of sample matrix')
+    parser.add_argument('--n_col', type=int, default=1, help='number of columns of sample matrix')
     parser.add_argument('path', type=str, help='path to checkpoint file')
-    
+
     args = parser.parse_args()
-    
+
     device = 'cuda'
 
     generator = StyledGenerator(512).to(device)
     generator.load_state_dict(torch.load(args.path)['g_running'])
     generator.eval()
 
+    if not os.path.exists('output/monet'):
+        os.makedirs('output/monet')
+    if not os.path.exists('output/monet_reduced'):
+        os.makedirs('output/monet_reduced')
     mean_style = get_mean_style(generator, device)
-
     step = int(math.log(args.size, 2)) - 2
-    
-    img = sample(generator, step, mean_style, args.n_row * args.n_col, device)
-    utils.save_image(img, 'sample.png', nrow=args.n_col, normalize=True, range=(-1, 1))
-    
-    for j in range(20):
-        img = style_mixing(generator, step, mean_style, args.n_col, args.n_row, device)
-        utils.save_image(
-            img, f'sample_mixing_{j}.png', nrow=args.n_col + 1, normalize=True, range=(-1, 1)
-        )
+    for i in range(7000):
+        img = sample(generator, step, mean_style,1, device)
+        if i<30:
+            utils.save_image(img, 'output/monet_reduced/%04d.png' % (i+1)), nrow=args.n_col, normalize=True, range=(-1, 1))
+
+        utils.save_image(img, 'output/monet/%04d.png' % (i+1)), nrow=args.n_col, normalize=True, range=(-1, 1))
