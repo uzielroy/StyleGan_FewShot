@@ -289,7 +289,7 @@ def backward_D(args, G_target, D_target, real_image, gen_in):
 	D_loss_real = F.softplus(-real_predict).mean()
 
 	grad_real = grad(outputs=real_predict.sum(), inputs=real_image, create_graph=True)[0]
-	grad_penalty = (grad_real.view(grad_real.size(0), -1).norm(2, dim=1) ** 2).mean()
+	grad_penalty = (grad_real.reshape(grad_real.size(0), -1).norm(2, dim=1) ** 2).mean()
 	grad_penalty = 10 / 2 * grad_penalty
 
 	if args.miner:
