@@ -2,12 +2,6 @@
 
 ## Getting started
 
-### Download datasets
-```
-Animal Face: https://vcla.stat.ucla.edu/people/zhangzhang-si/HiT/AnimalFace.zip
-Anime Face: http://www.nurs.or.jp/~nagadomi/animeface-character-dataset/data/animeface-character-dataset.zip
-```
-
 ### Preprocess datasets
 ```
 python prepare_data.py --out dataset/DATASET_lmdb --n_worker 8 dataset/DATASET
