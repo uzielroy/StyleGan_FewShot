@@ -296,7 +296,7 @@ def backward_D(args, G_target, D_target, real_image, gen_in):
 		gen_in = miner(gen_in)
 
 	fake_image_tgt = G_target(gen_in, step=step, alpha=alpha)
-	fake_predict = D_target(DiffAugment(fake_image_tgt,policy=policy) step=step, alpha=alpha)
+	fake_predict = D_target(DiffAugment(fake_image_tgt,policy=policy), step=step, alpha=alpha)
 	D_loss_fake = F.softplus(fake_predict).mean()
 
 	### update D (regularizer) ###
@@ -326,7 +326,7 @@ def backward_G(args, G_target, D_target, gen_in):
 		gen_in = miner(gen_in)
 
 	fake_image_tgt = G_target(gen_in, step=step, alpha=alpha)
-	predict = D_target(DiffAugment(fake_image_tgt,policy=policy) step=step, alpha=alpha)
+	predict = D_target(DiffAugment(fake_image_tgt,policy=policy),step=step, alpha=alpha)
 	gen_loss = F.softplus(-predict).mean()
 
 	### update G (regularizer) ###
