@@ -8,7 +8,6 @@ import re
 import json
 import tempfile
 import torch
-import dnnlib
 import sys
 import os
 from torch.autograd import Variable
@@ -145,4 +144,3 @@ def make_dataset_kaggle(path,monet=True):
 
 
 make_dataset_kaggle('/content/Pnina/MyDrive/StyleGan_FewShot/kaggle_dataset/',True)
-
