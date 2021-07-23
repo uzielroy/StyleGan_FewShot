@@ -2,8 +2,8 @@
 
 You can run a training session on 30 Monet images using the following Jupiter notebook:
 https://drive.google.com/file/d/1UE0WMdxm_CyXLXVd8vMFuZdyl7aLt3Zi/view?usp=sharing
-Its recommended that you mount your google drive for easier access to the checkpoint at the end of the training.
 
+Its recommended that you mount your google drive for easier access to the checkpoint at the end of the training.
 Kaggle dataset will be downloaded and saved.
 You can view the selected 30 Monet images (done by choosing the farthest 30 points, after dimensionality reduction)
 
